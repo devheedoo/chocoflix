@@ -97,3 +97,40 @@ export function fetchTVShowsTopRated(): Promise<ITVShows> {
     `${TMDB_BASE_URL}/tv/top_rated?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
   ).then((res) => res.json());
 }
+
+export interface ISearchResults {
+  page: number;
+  results: ISearchResult[];
+  total_pages: number; // 34,
+  total_results: number; // 662
+}
+
+export enum SearchResultMediaType {
+  MOVIE = 'movie',
+  TV = 'tv',
+  PERSON = 'person',
+}
+
+export interface ISearchResult {
+  adult: boolean; // false,
+  backdrop_path: string; // "/jtVl3nN5bJ4t7pgakLfGJmOrqZm.jpg",
+  genre_ids: number[]; // [878, 12]
+  id: number; // 438631,
+  media_type: 'movie' | 'tv' | 'person';
+  original_language: string; // "en",
+  original_title: string; // "Dune",
+  overview: string; //  "10191년, 아트레이데스 가문의 후계자인 폴은 시간과 공간을 초월해 과거와 미래를 모두 볼 수 있고, 더 나은 미래를 만들 유일한 구원자인 예지된 자의 운명을 타고났다. 그리고 어떤 계시처럼 매일 꿈에서 아라키스의 행성에 있는 한 여인을 만난다. 귀족들이 지지하는 아트레이데스 가문에 대한 황제의 질투는 폴과 그 일족들을 죽음이 기다리는 아라키스로 이끄는데...",
+  popularity: number; // 1162.646,
+  poster_path: string; // "/Dtwad1HQv3jc2f54QQQHJ1VZ1W.jpg",
+  release_date: string; // "2021-09-15",
+  title: string; // "듄",
+  video: boolean; // false,
+  vote_average: number; // 7.9,
+  vote_count: number; // 4837
+}
+
+export function fetchSearchResults(keyword: string): Promise<ISearchResults> {
+  return fetch(
+    `${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&language=ko-KR&query=${keyword}&page=1&include_adult=false`
+  ).then((res) => res.json());
+}
