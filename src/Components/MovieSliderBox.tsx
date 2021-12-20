@@ -1,7 +1,7 @@
 import { motion, Variants } from 'framer-motion';
 import styled from 'styled-components';
 import { makeMovieImageUrl } from '../utils';
-import { IMovie } from '../api';
+import { IMovie, ITVShow } from '../api';
 
 /* styled components */
 const Box = styled(motion.div)<{ backgroundImageUrl: string }>`
@@ -50,7 +50,7 @@ const boxDescriptionVariants: Variants = {
 };
 
 interface IMovieSliderBoxProps {
-  movie: IMovie;
+  movie: IMovie | ITVShow;
   onClick: Function;
 }
 
@@ -73,7 +73,8 @@ export default function MovieSliderBox({
         variants={boxDescriptionVariants}
         transition={{ type: 'tween' }}
       >
-        <h4>{movie.title}</h4>
+        {/* @ts-ignore */}
+        <h4>{movie.title || movie.name}</h4>
       </BoxDescription>
     </Box>
   );

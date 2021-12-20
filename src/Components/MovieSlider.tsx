@@ -1,13 +1,13 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { IMovie } from '../api';
+import { IMovie, ITVShow } from '../api';
 import MovieSliderBox from './MovieSliderBox';
 
 interface IMovieSliderProps {
   title: string;
   pageOffset: number;
-  movies: IMovie[];
+  movies: IMovie[] | ITVShow[];
   onClickMovie: (movieId: number) => void;
 }
 
