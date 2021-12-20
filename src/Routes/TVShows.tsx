@@ -126,7 +126,7 @@ export default function TVShows() {
   };
 
   const { scrollY } = useViewportScroll();
-  const handleClickOverlay = () => history.push('/');
+  const handleClickOverlay = () => history.push('/tv_show');
 
   const clickedTVShow =
     matchedTVShowId &&

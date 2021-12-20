@@ -124,7 +124,7 @@ interface IForm {
 export default function Header() {
   const matchesHome = useRouteMatch('/')?.isExact;
   const matchesMovieId = useRouteMatch('/movie/:movieId');
-  const matchesTVShows = useRouteMatch('/tv_shows');
+  const matchesTVShows = useRouteMatch('/tv_show');
 
   const [isSearching, setSearching] = useState(false);
   const toggleSearching = () => setSearching((prev) => !prev);
@@ -189,7 +189,7 @@ export default function Header() {
             ) : null}
           </Item>
           <Item>
-            <Link to="/tv_shows">TV Shows</Link>
+            <Link to="/tv_show">TV Show</Link>
             {matchesTVShows ? (
               <NavigationCircle layoutId="navigationCircle" />
             ) : null}
