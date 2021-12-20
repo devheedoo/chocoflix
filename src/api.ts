@@ -51,3 +51,31 @@ export function fetchMoviesUpcoming(): Promise<IMovies> {
     `${TMDB_BASE_URL}/movie/upcoming?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
   ).then((res) => res.json());
 }
+
+export interface ITVShowsOnTheAir {
+  page: number; // 1
+  results: ITVShow[]; // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+  total_pages: number; // 39
+  total_results: number; // 768
+}
+export interface ITVShow {
+  backdrop_path: string; // "/1R68vl3d5s86JsS2NPjl8UoMqIS.jpg"
+  first_air_date: string; //j "2021-11-24"
+  genre_ids: number[]; // [10759, 18]
+  id: number; // 88329
+  name: string; // "Hawkeye"
+  origin_country: string[]; // ['US']
+  original_language: string; // "en"
+  original_name: string; //"Hawkeye"
+  overview: string; //"Former Avenger Clint Barton has a seemingly simple mission: get back to his family for Christmas. Possible? Maybe with the help of Kate Bishop, a 22-year-old archer with dreams of becoming a superhero. The two are forced to work together when a presence from Barton’s past threatens to derail far more than the festive spirit."
+  popularity: number; //3243.761
+  poster_path: string; //"/pqzjCxPVc9TkVgGRWeAoMmyqkZV.jpg"
+  vote_average: number; //8.5
+  vote_count: number; // 912
+}
+
+export function fetchTVShowsOnTheAir(): Promise<ITVShowsOnTheAir> {
+  return fetch(
+    'https://api.themoviedb.org/3/tv/on_the_air?api_key=e39a8d93726f02bc3d5a6e1542f7a2f9&language=en-US&page=1'
+  ).then((res) => res.json());
+}
