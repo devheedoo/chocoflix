@@ -52,7 +52,7 @@ export function fetchMoviesUpcoming(): Promise<IMovies> {
   ).then((res) => res.json());
 }
 
-export interface ITVShowsOnTheAir {
+export interface ITVShowsAiringToday {
   page: number; // 1
   results: ITVShow[]; // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
   total_pages: number; // 39
@@ -74,8 +74,8 @@ export interface ITVShow {
   vote_count: number; // 912
 }
 
-export function fetchTVShowsOnTheAir(): Promise<ITVShowsOnTheAir> {
+export function fetchTVShowsAiringToday(): Promise<ITVShowsAiringToday> {
   return fetch(
-    'https://api.themoviedb.org/3/tv/on_the_air?api_key=e39a8d93726f02bc3d5a6e1542f7a2f9&language=en-US&page=1'
+    `${TMDB_BASE_URL}/tv/airing_today?api_key=${TMDB_API_KEY}&language=en-US&page=1`
   ).then((res) => res.json());
 }

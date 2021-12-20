@@ -2,15 +2,7 @@ import { AnimatePresence, motion, useViewportScroll } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  fetchMoviesLatest,
-  fetchMoviesNowPlaying,
-  fetchMoviesTopRated,
-  fetchMoviesUpcoming,
-  fetchTVShowsOnTheAir,
-  IMovies,
-  ITVShowsOnTheAir,
-} from '../api';
+import { fetchTVShowsAiringToday, ITVShowsAiringToday } from '../api';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
@@ -106,11 +98,15 @@ export default function TVShows() {
     useRouteMatch<{ tvShowId: string }>('/tv_show/:tvShowId');
   const matchedTVShowId = matchesTVShowId?.params.tvShowId;
 
-  const { data: tvShowsOnTheAir, isLoading: isLoadingTVShowsOnTheAir } =
-    useQuery<ITVShowsOnTheAir>(['tv_show', 'on_the_air'], fetchTVShowsOnTheAir);
-  const [tvShowOfBanner, ...tvShowsOfSlider] = tvShowsOnTheAir?.results ?? [];
+  const { data: tvShowsAiringToday, isLoading: isLoadingTVShowsAiringToday } =
+    useQuery<ITVShowsAiringToday>(
+      ['tv_show', 'airing_today'],
+      fetchTVShowsAiringToday
+    );
+  const [tvShowOfBanner, ...tvShowsOfSlider] =
+    tvShowsAiringToday?.results ?? [];
 
-  const isLoading = isLoadingTVShowsOnTheAir;
+  const isLoading = isLoadingTVShowsAiringToday;
   const handleClickTVShow = (tvShowId: number) => {
     history.push(`/tv_show/${tvShowId}`);
   };
@@ -122,7 +118,7 @@ export default function TVShows() {
     matchedTVShowId &&
     tvShowsOfSlider.find((tvShow) => tvShow.id === +matchedTVShowId);
 
-  console.log(tvShowsOnTheAir);
+  console.log(tvShowsAiringToday);
 
   return (
     <Wrapper>
