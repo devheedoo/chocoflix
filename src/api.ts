@@ -134,3 +134,134 @@ export function fetchSearchResults(keyword: string): Promise<ISearchResults> {
     `${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&language=ko-KR&query=${keyword}&page=1&include_adult=false`
   ).then((res) => res.json());
 }
+
+export interface IMovieDetail {
+  adult: boolean; // false
+  backdrop_path: string; // '/kOJHfBhGCeBjLjAWw2SHLAztlmf.jpg';
+  belongs_to_collection: null;
+  budget: number; // 2540800;
+  genres: {
+    id: number; // 35;
+    name: string; // '코미디';
+  }[];
+  homepage: string; // '';
+  id: number; // 872;
+  imdb_id: string; //  'tt0045152';
+  original_language: string; //  'en';
+  original_title: string; //  "Singin' in the Rain";
+  overview: string; //  '아마츄어 쇼 코미디언인 돈 록우드(진 켈리)와 코스모(도날드 오코너)는 공연을 하며 이곳저곳을 떠돌아다니다 뜻대로 되지않자 새 일자리를 얻기위해 헐리우드로 온다. 그런데 우연찮게 돈 록우드는 마뉴멘탈 영화사의 스턴트맨 역을 따내게 되고, 당시 최고의 인기를 누리고 있던 여배우인 리나 레이먼트(쟌 하겐)와 함께 다수의 영화에 출연함으로써 단연 스타로 급부상하게 된다. 그러나 화려한 영광도 잠시, 헐리웃 영화계가 무성영화에서 유성영화 체제로 전환됨으로써 목소리 연기가 너무나 형편없는 리나 레이먼트 때문에 영화를 완전히 망치게 되는데...';
+  popularity: number; // 21.203;
+  poster_path: string; // '/w03EiJVHP8Un77boQeE7hg9DVdU.jpg';
+  production_companies: {
+    id: number; // 21;
+    logo_path: string; //  '/aOWKh4gkNrfFZ3Ep7n0ckPhoGb5.png';
+    name: string; //  'Metro-Goldwyn-Mayer';
+    origin_country: string; // 'US';
+  }[];
+  production_countries: {
+    iso_3166_1: string; //  'US';
+    name: string; //  'United States of America';
+  }[];
+  release_date: string; //  '1952-04-09';
+  revenue: number; // 7200000;
+  runtime: number; // 102;
+  spoken_languages: {
+    english_name: string; //  'English';
+    iso_639_1: string; //  'en';
+    name: string; //  'English';
+  }[];
+  status: string; //  'Released';
+  tagline: string; //  '영화 역사상 가장 유쾌하고 사랑스러운 뮤지컬 영화';
+  title: string; //  '사랑은 비를 타고';
+  video: boolean; // false;
+  vote_average: number; // 8.2;
+  vote_count: number; // 2286;
+}
+
+export function fetchMovieDetail(movieId: number): Promise<IMovieDetail> {
+  return fetch(
+    `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=ko-KR`
+  ).then((res) => res.json());
+}
+
+export interface ITVShowDetail {
+  backdrop_path: string; // '/36bfPmS0daIxWmFq4amefos5GeP.jpg';
+  created_by: {
+    id: number; // 3353842;
+    credit_id: string; // '61c0db8ba84ff7004180721a';
+    name: string; // 'Kreetta Onkeli';
+    gender: number; // 0;
+    profile_path: null;
+  }[];
+  episode_run_time: number[]; // [];
+  first_air_date: string; // '2006-10-16';
+  genres: {
+    id: number; // 18;
+    name: string; // '드라마';
+  }[];
+  homepage: string; // '';
+  id: number; // 153854;
+  in_production: boolean; // true;
+  languages: string[]; // ['fi'];
+  last_air_date: string; // '2006-10-30';
+  last_episode_to_air: {
+    air_date: string; // '2006-10-30';
+    episode_number: number; // 3;
+    id: number; // 3401428;
+    name: string; // '';
+    overview: string; // '';
+    production_code: string; // '';
+    season_number: number; // 1;
+    still_path: string; // '/qc2qqVDFTmFFS1aqKq2JEne90SW.jpg';
+    vote_average: number; // 0;
+    vote_count: number; // 0;
+  };
+  name: string; // 'Ilonen talo';
+  next_episode_to_air: null;
+  networks: {
+    name: string; // 'Yle Areena';
+    id: number; // 2594;
+    logo_path: string; // '/vxp8LTTXwGFrzNM7zSgzl4DfSad.png';
+    origin_country: string; // 'FI';
+  }[];
+  number_of_episodes: number; // 3;
+  number_of_seasons: number; // 1;
+  origin_country: string[]; // ['FI'];
+  original_language: string; // 'fi';
+  original_name: string; // 'Ilonen talo';
+  overview: string; // '';
+  popularity: number; // 0;
+  poster_path: string; // '/dPDruOyrLgcDe9A20yUhF8nir2w.jpg';
+  production_companies: {
+    id: number; // 440;
+    logo_path: string; // '/z10otS2BrUXXlIH5zGBP5dnhTPe.png';
+    name: string; // 'Kinoproduction';
+    origin_country: string; // 'FI';
+  }[];
+  production_countries: any[]; // [];
+  seasons: {
+    air_date: string; // '2006-10-16';
+    episode_count: number; // 3;
+    id: number; // 236623;
+    name: string; // '시즌 1';
+    overview: string; // '';
+    poster_path: string; // '/dPDruOyrLgcDe9A20yUhF8nir2w.jpg';
+    season_number: number; // 1;
+  }[];
+  spoken_languages: {
+    english_name: string; // 'Finnish';
+    iso_639_1: string; // 'fi';
+    name: string; // 'suomi';
+  }[];
+  status: string; // 'Returning Series';
+  tagline: string; // '';
+  type: string; // 'Scripted';
+  vote_average: number; // 0;
+  vote_count: number; // 0;
+}
+
+export function fetchTVShowDetail(tvShowId: number): Promise<ITVShowDetail> {
+  return fetch(
+    `${TMDB_BASE_URL}/tv/${tvShowId}?api_key=${TMDB_API_KEY}&language=ko-KR`
+  ).then((res) => res.json());
+}

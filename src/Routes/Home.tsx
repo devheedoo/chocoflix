@@ -8,7 +8,9 @@ import {
   fetchMoviesTopRated,
   fetchMoviesUpcoming,
   IMovies,
+  SearchResultMediaType,
 } from '../api';
+import DetailModal from '../Components/DetailModal';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
@@ -60,7 +62,8 @@ const MovieDetailModal = styled(motion.div)`
   margin: 0 auto;
   min-width: 800px;
   width: 40vw;
-  height: 50vh;
+  height: 70vh;
+  background-color: rgba(0, 0, 0, 1);
   z-index: 101;
 `;
 
@@ -186,18 +189,10 @@ export default function Home() {
                   layoutId={matchesMovieId?.params.movieId}
                 >
                   {clickedMovie ? (
-                    <>
-                      <MovieCover
-                        backgroundImageUrl={makeMovieImageUrl(
-                          clickedMovie.backdrop_path,
-                          500
-                        )}
-                      />
-                      <MovieDetailContainer>
-                        <MovieTitle>{clickedMovie.title}</MovieTitle>
-                        <MovieOverview>{clickedMovie.overview}</MovieOverview>
-                      </MovieDetailContainer>
-                    </>
+                    <DetailModal
+                      contentId={clickedMovie.id}
+                      contentType={SearchResultMediaType.MOVIE}
+                    />
                   ) : null}
                 </MovieDetailModal>
               </>

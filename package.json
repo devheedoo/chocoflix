@@ -1,5 +1,5 @@
 {
-  "name": "react-masterclass",
+  "name": "chocoflix",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -57,5 +57,6 @@
   "devDependencies": {
     "@types/react-helmet": "^6.1.4",
     "@types/styled-components": "^5.1.17"
-  }
+  },
+  "homepage": "https://devheedoo.github.io/chocoflix"
 }
