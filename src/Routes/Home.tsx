@@ -2,11 +2,17 @@ import { AnimatePresence, motion, useViewportScroll } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchMoviesNowPlaying, IMovies } from '../api';
+import {
+  fetchMoviesLatest,
+  fetchMoviesNowPlaying,
+  fetchMoviesTopRated,
+  fetchMoviesUpcoming,
+  IMovies,
+} from '../api';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
-const SLIDER_OFFSET = Math.floor(window.innerWidth / 300);
+const sliderOffset = Math.floor(window.innerWidth / 300);
 
 /* styled components */
 const Wrapper = styled.div`
@@ -97,11 +103,21 @@ export default function Home() {
   const matchesMovieId = useRouteMatch<{ movieId: string }>('/movie/:movieId');
   const matchedMovieId = matchesMovieId?.params.movieId;
 
-  const { data, isLoading } = useQuery<IMovies>(
-    ['movie', 'now_playing'],
-    fetchMoviesNowPlaying
-  );
-  const [movieOfBanner, ...moviesOfSlider] = data?.results ?? [];
+  const { data: moviesNowPlaying, isLoading: isLoadingMoviesNowPlaying } =
+    useQuery<IMovies>(['movie', 'now_playing'], fetchMoviesNowPlaying);
+  const { data: moviesLatest, isLoading: isLoadingMoviesLatest } =
+    useQuery<IMovies>(['movie', 'latest'], fetchMoviesLatest);
+  const { data: moviesTopRated, isLoading: isLoadingMoviesTopRated } =
+    useQuery<IMovies>(['movie', 'top_rated'], fetchMoviesTopRated);
+  const { data: moviesUpcoming, isLoading: isLoadingMoviesUpcoming } =
+    useQuery<IMovies>(['movie', 'upcoming'], fetchMoviesUpcoming);
+  const [movieOfBanner, ...moviesOfSlider] = moviesNowPlaying?.results ?? [];
+
+  const isLoading =
+    isLoadingMoviesNowPlaying ||
+    isLoadingMoviesLatest ||
+    isLoadingMoviesTopRated ||
+    isLoadingMoviesUpcoming;
 
   const handleClickMovie = (movieId: number) => {
     history.push(`/movie/${movieId}`);
@@ -135,7 +151,25 @@ export default function Home() {
             <MovieSlider
               title={'NOW PLAYING'}
               movies={moviesOfSlider}
-              pageOffset={SLIDER_OFFSET}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickMovie}
+            />
+            <MovieSlider
+              title={'LATEST'}
+              movies={moviesLatest!.results ?? []}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickMovie}
+            />
+            <MovieSlider
+              title={'TOP RATED'}
+              movies={moviesTopRated!.results ?? []}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickMovie}
+            />
+            <MovieSlider
+              title={'UPCOMING'}
+              movies={moviesUpcoming!.results ?? []}
+              pageOffset={sliderOffset}
               onClickMovie={handleClickMovie}
             />
           </SliderWrapper>
@@ -155,7 +189,8 @@ export default function Home() {
                     <>
                       <MovieCover
                         backgroundImageUrl={makeMovieImageUrl(
-                          clickedMovie.backdrop_path
+                          clickedMovie.backdrop_path,
+                          500
                         )}
                       />
                       <MovieDetailContainer>

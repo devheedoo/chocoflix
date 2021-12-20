@@ -45,7 +45,7 @@ export default function MovieSlider({
   );
 
   return (
-    <Slider>
+    <Slider pageOffset={pageOffset}>
       <SliderTitle>{title}</SliderTitle>
       <AnimatePresence initial={false} onExitComplete={handleExitComplete}>
         <Row
@@ -77,8 +77,10 @@ export default function MovieSlider({
 }
 
 // styled components
-const Slider = styled.div`
+const Slider = styled.div<{ pageOffset: number }>`
   position: relative;
+  height: ${(props) => 44 + window.innerWidth / props.pageOffset / 1.58}px;
+  margin-bottom: 20px;
 `;
 
 const Row = styled(motion.div)<{ offset: number }>`
