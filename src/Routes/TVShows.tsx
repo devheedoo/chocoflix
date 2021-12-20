@@ -8,7 +8,9 @@ import {
   fetchTVShowsPopular,
   fetchTVShowsTopRated,
   ITVShows,
+  SearchResultMediaType,
 } from '../api';
+import DetailModal from '../Components/DetailModal';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
@@ -190,18 +192,10 @@ export default function TVShows() {
                   layoutId={matchesTVShowId?.params.tvShowId}
                 >
                   {clickedTVShow ? (
-                    <>
-                      <MovieCover
-                        backgroundImageUrl={makeMovieImageUrl(
-                          clickedTVShow.backdrop_path,
-                          500
-                        )}
-                      />
-                      <MovieDetailContainer>
-                        <MovieTitle>{clickedTVShow.name}</MovieTitle>
-                        <MovieOverview>{clickedTVShow.overview}</MovieOverview>
-                      </MovieDetailContainer>
-                    </>
+                    <DetailModal
+                      contentId={clickedTVShow.id}
+                      contentType={SearchResultMediaType.TV}
+                    />
                   ) : null}
                 </MovieDetailModal>
               </>

@@ -1,6 +1,10 @@
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { fetchMovieDetail, SearchResultMediaType } from '../api';
+import {
+  fetchMovieDetail,
+  fetchTVShowDetail,
+  SearchResultMediaType,
+} from '../api';
 import { makeMovieImageUrl } from '../utils';
 
 interface IDetailModalProps {
@@ -16,7 +20,7 @@ export default function DetailModal({
   if (contentType === SearchResultMediaType.MOVIE) {
     return <DetailModalMovie contentId={contentId} />;
   } else if (contentType === SearchResultMediaType.TV) {
-    return null;
+    return <DetailModalTVShow contentId={contentId} />;
   } else {
     return null;
   }
@@ -48,6 +52,40 @@ function DetailModalMovie({ contentId }: IDetailModalMovieProps) {
           </Vote>
         </div>
         <MovieOverview>{movie.overview}</MovieOverview>
+      </MovieDetailContainer>
+    </>
+  );
+}
+
+interface IDetailModalTVShowProps {
+  contentId: number;
+}
+
+function DetailModalTVShow({ contentId }: IDetailModalTVShowProps) {
+  const { data: tvShow, isLoading } = useQuery('tv_show_detail', () =>
+    fetchTVShowDetail(contentId)
+  );
+  if (isLoading) return null;
+  return tvShow === undefined ? null : (
+    <>
+      <MovieCover
+        backgroundImageUrl={makeMovieImageUrl(tvShow.backdrop_path)}
+      />
+      <MovieDetailContainer>
+        <MovieTitle>{tvShow.name}</MovieTitle>
+        <Tagline>"{tvShow.tagline}"</Tagline>
+        <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 5 }}>
+          <Genres>
+            {tvShow.genres.map((genre) => (
+              <span key={genre.id}>{genre.name}</span>
+            ))}
+          </Genres>
+          <Runtime>총 시즌 {tvShow.seasons.length}</Runtime>
+          <Vote>
+            {tvShow.vote_average}점 ({tvShow.vote_count}명)
+          </Vote>
+        </div>
+        <MovieOverview>{tvShow.overview}</MovieOverview>
       </MovieDetailContainer>
     </>
   );
