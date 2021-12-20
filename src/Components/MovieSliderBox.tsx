@@ -1,7 +1,7 @@
 import { motion, Variants } from 'framer-motion';
 import styled from 'styled-components';
 import { makeMovieImageUrl } from '../utils';
-import { IMovieNowPlaying } from '../api';
+import { IMovie } from '../api';
 
 /* styled components */
 const Box = styled(motion.div)<{ backgroundImageUrl: string }>`
@@ -50,7 +50,7 @@ const boxDescriptionVariants: Variants = {
 };
 
 interface IMovieSliderBoxProps {
-  movie: IMovieNowPlaying;
+  movie: IMovie;
   onClick: Function;
 }
 

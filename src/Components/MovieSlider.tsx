@@ -1,14 +1,13 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import styled from 'styled-components';
-import { IMovieNowPlaying } from '../api';
+import { IMovie } from '../api';
 import MovieSliderBox from './MovieSliderBox';
 
 interface IMovieSliderProps {
   pageIndex: number;
   pageOffset: number;
-  movies: IMovieNowPlaying[];
+  movies: IMovie[];
   onClickMovie: (movieId: number) => void;
-  onExitComplete: () => void;
 }
 
 export default function MovieSlider({

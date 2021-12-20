@@ -1,7 +1,7 @@
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_API_KEY = 'e39a8d93726f02bc3d5a6e1542f7a2f9';
 
-export interface IMovieNowPlaying {
+export interface IMovie {
   adult: boolean;
   backdrop_path: string; // "/eENEf62tMXbhyVvdcXlnQz2wcuT.jpg"
   genre_ids: number[]; // [878, 28, 12]
@@ -17,19 +17,37 @@ export interface IMovieNowPlaying {
   vote_average: number; // 7.2
   vote_count: number; // 4635
 }
-export interface IMoviesNowPlaying {
+export interface IMovies {
   dates: {
     maximum: string;
     minimum: string;
   };
   page: number;
-  results: IMovieNowPlaying[];
+  results: IMovie[];
   total_pages: number;
   total_results: number;
 }
 
-export function fetchMoviesNowPlaying() {
+export function fetchMoviesNowPlaying(): Promise<IMovies> {
   return fetch(
     `${TMDB_BASE_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
+  ).then((res) => res.json());
+}
+
+export function fetchMoviesLatest(): Promise<IMovies> {
+  return fetch(
+    `${TMDB_BASE_URL}/movie/latest?api_key=${TMDB_API_KEY}&language=ko-KR`
+  ).then((res) => res.json());
+}
+
+export function fetchMoviesTopRated(): Promise<IMovies> {
+  return fetch(
+    `${TMDB_BASE_URL}/movie/top_rated?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
+  ).then((res) => res.json());
+}
+
+export function fetchMoviesUpcoming(): Promise<IMovies> {
+  return fetch(
+    `${TMDB_BASE_URL}/movie/upcoming?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
   ).then((res) => res.json());
 }

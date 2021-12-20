@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchMoviesNowPlaying, IMoviesNowPlaying } from '../api';
+import { fetchMoviesNowPlaying, IMovies } from '../api';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
@@ -91,7 +91,7 @@ export default function Home() {
   const matchesMovieId = useRouteMatch<{ movieId: string }>('/movie/:movieId');
   const matchedMovieId = matchesMovieId?.params.movieId;
 
-  const { data, isLoading } = useQuery<IMoviesNowPlaying>(
+  const { data, isLoading } = useQuery<IMovies>(
     ['movie', 'now_playing'],
     fetchMoviesNowPlaying
   );
