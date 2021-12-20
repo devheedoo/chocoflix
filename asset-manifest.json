@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/chocoflix/static/js/main.0d3a1db7.chunk.js",
-    "main.js.map": "/chocoflix/static/js/main.0d3a1db7.chunk.js.map",
+    "main.js": "/chocoflix/static/js/main.e738f793.chunk.js",
+    "main.js.map": "/chocoflix/static/js/main.e738f793.chunk.js.map",
     "runtime-main.js": "/chocoflix/static/js/runtime-main.cdf871c8.js",
     "runtime-main.js.map": "/chocoflix/static/js/runtime-main.cdf871c8.js.map",
     "static/js/2.10b9fa56.chunk.js": "/chocoflix/static/js/2.10b9fa56.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.cdf871c8.js",
     "static/js/2.10b9fa56.chunk.js",
-    "static/js/main.0d3a1db7.chunk.js"
+    "static/js/main.e738f793.chunk.js"
   ]
 }
