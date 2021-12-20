@@ -1,5 +1,4 @@
 import { AnimatePresence, motion, useViewportScroll } from 'framer-motion';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -86,6 +85,13 @@ const MovieOverview = styled.p`
   color: ${(props) => props.theme.white.darker};
 `;
 
+const SliderWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  bottom: 200px;
+`;
+
 export default function Home() {
   const history = useHistory();
   const matchesMovieId = useRouteMatch<{ movieId: string }>('/movie/:movieId');
@@ -96,22 +102,6 @@ export default function Home() {
     fetchMoviesNowPlaying
   );
   const [movieOfBanner, ...moviesOfSlider] = data?.results ?? [];
-
-  const [isExitingSlide, setExitingSlide] = useState(false);
-  const handleExitComplete = () => setExitingSlide(false);
-
-  const [sliderIndex, setSliderIndex] = useState(0);
-  const showNextSlide = () => {
-    if (isExitingSlide) return; // Disable while slide animtion playing
-    const maxIndex = Math.ceil(moviesOfSlider.length / SLIDER_OFFSET) - 1;
-    setExitingSlide(true);
-    setSliderIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-  };
-
-  const moviesOnSlide = moviesOfSlider.slice(
-    SLIDER_OFFSET * sliderIndex,
-    SLIDER_OFFSET * (sliderIndex + 1)
-  );
 
   const handleClickMovie = (movieId: number) => {
     history.push(`/movie/${movieId}`);
@@ -129,21 +119,26 @@ export default function Home() {
       {isLoading ? (
         <Loader></Loader>
       ) : (
-        <>
-          <Banner
-            onClick={showNextSlide}
-            fileNameWithExtension={movieOfBanner?.backdrop_path ?? ''}
-          >
+        <div
+          style={{
+            position: 'relative',
+            backgroundColor: 'rgba(0,0,0,1)',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Banner fileNameWithExtension={movieOfBanner?.backdrop_path ?? ''}>
             <Title>{movieOfBanner?.title ?? ''}</Title>
             <Overview>{movieOfBanner?.overview ?? ''}</Overview>
           </Banner>
-          <MovieSlider
-            movies={moviesOnSlide}
-            pageIndex={sliderIndex}
-            pageOffset={SLIDER_OFFSET}
-            onClickMovie={handleClickMovie}
-            onExitComplete={handleExitComplete}
-          />
+          <SliderWrapper>
+            <MovieSlider
+              title={'NOW PLAYING'}
+              movies={moviesOfSlider}
+              pageOffset={SLIDER_OFFSET}
+              onClickMovie={handleClickMovie}
+            />
+          </SliderWrapper>
           <AnimatePresence>
             {matchesMovieId ? (
               <>
@@ -173,7 +168,7 @@ export default function Home() {
               </>
             ) : null}
           </AnimatePresence>
-        </>
+        </div>
       )}
     </Wrapper>
   );
