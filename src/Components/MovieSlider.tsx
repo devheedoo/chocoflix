@@ -32,7 +32,11 @@ export default function MovieSlider({
           exit="exit"
         >
           {movies.map((movie) => (
-            <MovieSliderBox movie={movie} onClick={onClickMovie} />
+            <MovieSliderBox
+              key={movie.id}
+              movie={movie}
+              onClick={onClickMovie}
+            />
           ))}
         </Row>
       </AnimatePresence>
