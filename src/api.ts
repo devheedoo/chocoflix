@@ -52,7 +52,7 @@ export function fetchMoviesUpcoming(): Promise<IMovies> {
   ).then((res) => res.json());
 }
 
-export interface ITVShowsAiringToday {
+export interface ITVShows {
   page: number; // 1
   results: ITVShow[]; // (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
   total_pages: number; // 39
@@ -74,8 +74,26 @@ export interface ITVShow {
   vote_count: number; // 912
 }
 
-export function fetchTVShowsAiringToday(): Promise<ITVShowsAiringToday> {
+export function fetchTVShowsAiringToday(): Promise<ITVShows> {
   return fetch(
-    `${TMDB_BASE_URL}/tv/airing_today?api_key=${TMDB_API_KEY}&language=en-US&page=1`
+    `${TMDB_BASE_URL}/tv/airing_today?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
+  ).then((res) => res.json());
+}
+
+export function fetchTVShowsLatest(): Promise<ITVShows> {
+  return fetch(
+    `${TMDB_BASE_URL}/tv/latest?api_key=${TMDB_API_KEY}&language=ko-KR`
+  ).then((res) => res.json());
+}
+
+export function fetchTVShowsPopular(): Promise<ITVShows> {
+  return fetch(
+    `${TMDB_BASE_URL}/tv/popular?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
+  ).then((res) => res.json());
+}
+
+export function fetchTVShowsTopRated(): Promise<ITVShows> {
+  return fetch(
+    `${TMDB_BASE_URL}/tv/top_rated?api_key=${TMDB_API_KEY}&language=ko-KR&page=1`
   ).then((res) => res.json());
 }

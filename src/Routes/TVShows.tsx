@@ -2,7 +2,13 @@ import { AnimatePresence, motion, useViewportScroll } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchTVShowsAiringToday, ITVShowsAiringToday } from '../api';
+import {
+  fetchTVShowsAiringToday,
+  fetchTVShowsLatest,
+  fetchTVShowsPopular,
+  fetchTVShowsTopRated,
+  ITVShows,
+} from '../api';
 import MovieSlider from '../Components/MovieSlider';
 import { makeMovieImageUrl } from '../utils';
 
@@ -99,14 +105,22 @@ export default function TVShows() {
   const matchedTVShowId = matchesTVShowId?.params.tvShowId;
 
   const { data: tvShowsAiringToday, isLoading: isLoadingTVShowsAiringToday } =
-    useQuery<ITVShowsAiringToday>(
-      ['tv_show', 'airing_today'],
-      fetchTVShowsAiringToday
-    );
+    useQuery<ITVShows>(['tv_show', 'airing_today'], fetchTVShowsAiringToday);
+  const { data: tvShowsLatest, isLoading: isLoadingTVShowsLatest } =
+    useQuery<ITVShows>(['tv_show', 'latest'], fetchTVShowsLatest);
+  const { data: tvShowsPopular, isLoading: isLoadingTVShowsPopular } =
+    useQuery<ITVShows>(['tv_show', 'popular'], fetchTVShowsPopular);
+  const { data: tvShowsTopRated, isLoading: isLoadingTVShowsTopRated } =
+    useQuery<ITVShows>(['tv_show', 'top_rated'], fetchTVShowsTopRated);
   const [tvShowOfBanner, ...tvShowsOfSlider] =
     tvShowsAiringToday?.results ?? [];
 
-  const isLoading = isLoadingTVShowsAiringToday;
+  const isLoading =
+    isLoadingTVShowsAiringToday ||
+    isLoadingTVShowsLatest ||
+    isLoadingTVShowsPopular ||
+    isLoadingTVShowsTopRated;
+
   const handleClickTVShow = (tvShowId: number) => {
     history.push(`/tv_show/${tvShowId}`);
   };
@@ -141,6 +155,24 @@ export default function TVShows() {
             <MovieSlider
               title={'NOW PLAYING'}
               movies={tvShowsOfSlider}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickTVShow}
+            />
+            <MovieSlider
+              title={'LATEST'}
+              movies={tvShowsLatest?.results ?? []}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickTVShow}
+            />
+            <MovieSlider
+              title={'POPULAR'}
+              movies={tvShowsPopular?.results ?? []}
+              pageOffset={sliderOffset}
+              onClickMovie={handleClickTVShow}
+            />
+            <MovieSlider
+              title={'TOP RATED'}
+              movies={tvShowsTopRated?.results ?? []}
               pageOffset={sliderOffset}
               onClickMovie={handleClickTVShow}
             />
